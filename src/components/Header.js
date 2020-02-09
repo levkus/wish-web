@@ -4,14 +4,16 @@ import { Link as RouterLink } from 'react-router-dom'
 import { ProfileContext } from 'context/profile'
 
 import { makeStyles } from '@material-ui/core/styles'
-import AppBar from '@material-ui/core/AppBar'
-import Toolbar from '@material-ui/core/Toolbar'
-import Typography from '@material-ui/core/Typography'
-import Link from '@material-ui/core/Link'
-import Avatar from '@material-ui/core/Avatar'
-import Menu from '@material-ui/core/Menu'
-import Grid from '@material-ui/core/Grid'
-import MenuItem from '@material-ui/core/MenuItem'
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  Link,
+  Avatar,
+  Menu,
+  Grid,
+  MenuItem,
+} from '@material-ui/core'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -26,6 +28,10 @@ const useStyles = makeStyles(theme => ({
   },
   avatar: {
     marginRight: theme.spacing(1),
+  },
+  offset: theme.mixins.toolbar,
+  appBar: {
+    boxShadow: 'none',
   },
 }))
 
@@ -69,8 +75,8 @@ const ProfileMenu = () => {
         onClose={handleClose}
       >
         <MenuItem onClick={handleClose}>
-          <Link to="/profile" component={RouterLink}>
-            Профиль
+          <Link to="/my-wishlist" component={RouterLink}>
+            Мой вишлист
           </Link>
         </MenuItem>
         <MenuItem
@@ -86,20 +92,21 @@ const ProfileMenu = () => {
   )
 }
 
-export default function ButtonAppBar() {
+export default function Header() {
   const profile = useContext(ProfileContext)
   const classes = useStyles()
 
   return (
     <div className={classes.root}>
-      <AppBar position="static" color="transparent">
+      <AppBar position="fixed" color="inherit" className={classes.appBar}>
         <Toolbar>
-          <Typography variant="h6" className={classes.title}>
-            Wish
+          <Typography variant="h4" className={classes.title}>
+            Вишлист
           </Typography>
           {!profile.error && !profile.loading && <ProfileMenu />}
         </Toolbar>
       </AppBar>
+      <div className={classes.offset} />
     </div>
   )
 }

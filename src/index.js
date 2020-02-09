@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import ApolloClient from 'apollo-boost'
+import { ApolloClient, InMemoryCache } from '@apollo/client'
+import { createUploadLink } from 'apollo-upload-client'
 import { ApolloProvider } from '@apollo/react-hooks'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import { Normalize } from 'styled-normalize'
@@ -13,7 +14,10 @@ import { ProfileProvider } from 'context/profile'
 import Index from 'routes/index'
 import Login from 'routes/login'
 import SignUp from 'routes/sign-up'
-import Profile from 'routes/profile'
+import MyWishlist from 'routes/my-wishlist'
+import CreateWish from 'routes/create-wish'
+import User from 'routes/user'
+import UserList from 'routes/user-list'
 
 import Header from 'components/Header'
 
@@ -23,10 +27,13 @@ const storage = window.localStorage
 const token = storage.getItem('token')
 
 const client = new ApolloClient({
-  uri: process.env.REACT_APP_API_URL,
-  headers: {
-    Authorization: token ? `Bearer ${token}` : '',
-  },
+  cache: new InMemoryCache(),
+  link: createUploadLink({
+    uri: process.env.REACT_APP_API_URL,
+    headers: {
+      Authorization: token ? `Bearer ${token}` : '',
+    },
+  }),
 })
 
 const App = () => {
@@ -48,8 +55,17 @@ const App = () => {
                 <Route path="/sign-up">
                   <SignUp />
                 </Route>
-                <PrivateRoute path="/profile">
-                  <Profile />
+                <PrivateRoute path="/my-wishlist">
+                  <MyWishlist />
+                </PrivateRoute>
+                <PrivateRoute path="/create-wish">
+                  <CreateWish />
+                </PrivateRoute>
+                <PrivateRoute path="/user-list">
+                  <UserList />
+                </PrivateRoute>
+                <PrivateRoute path="/users/:username">
+                  <User />
                 </PrivateRoute>
               </Switch>
             </div>
