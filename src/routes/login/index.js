@@ -1,6 +1,5 @@
 import React, { useState, useContext } from 'react'
 import { useMutation } from '@apollo/react-hooks'
-import { gql } from 'apollo-boost'
 import { Redirect } from 'react-router-dom'
 import { Link as RouterLink } from 'react-router-dom'
 
@@ -16,14 +15,9 @@ import Grid from '@material-ui/core/Grid'
 import Container from '@material-ui/core/Container'
 import Typography from '@material-ui/core/Typography'
 
+import { LOGIN } from 'graphql/mutations'
+
 const storage = window.localStorage
-
-const LOGIN = gql`
-  mutation Login($username: String!, $password: String!) {
-    login(username: $username, password: $password)
-  }
-`
-
 const Login = () => {
   const profile = useContext(ProfileContext)
   const [username, setUsername] = useState('')

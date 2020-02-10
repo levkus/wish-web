@@ -1,18 +1,9 @@
 import React, { useState, createContext } from 'react'
 import { useQuery } from '@apollo/react-hooks'
-import { gql } from 'apollo-boost'
+
+import { ME } from 'graphql/queries'
 
 export const ProfileContext = createContext()
-
-export const ME = gql`
-  query Me {
-    me {
-      username
-      email
-      id
-    }
-  }
-`
 
 export const ProfileProvider = ({ children }) => {
   const [tokenFailed, setTokenFailed] = useState(false)

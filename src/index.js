@@ -17,7 +17,7 @@ import SignUp from 'routes/sign-up'
 import MyWishlist from 'routes/my-wishlist'
 import CreateWish from 'routes/create-wish'
 import User from 'routes/user'
-import UserList from 'routes/user-list'
+import Users from 'routes/users'
 
 import Header from 'components/Header'
 
@@ -61,8 +61,8 @@ const App = () => {
                 <PrivateRoute path="/create-wish">
                   <CreateWish />
                 </PrivateRoute>
-                <PrivateRoute path="/user-list">
-                  <UserList />
+                <PrivateRoute exact path="/users">
+                  <Users />
                 </PrivateRoute>
                 <PrivateRoute path="/users/:username">
                   <User />

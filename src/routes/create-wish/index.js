@@ -1,6 +1,5 @@
 import React, { useState, useContext } from 'react'
 import { useMutation } from '@apollo/react-hooks'
-import { gql } from 'apollo-boost'
 import { Redirect } from 'react-router-dom'
 
 import { ProfileContext } from 'context/profile'
@@ -15,23 +14,8 @@ import Typography from '@material-ui/core/Typography'
 
 import Dropzone from 'components/Dropzone'
 
-const CREATE_WISH = gql`
-  mutation CreateWish(
-    $title: String!
-    $description: String!
-    $imageUrl: String
-    $UserId: Int!
-  ) {
-    createWish(
-      title: $title
-      description: $description
-      imageUrl: $imageUrl
-      UserId: $UserId
-    ) {
-      id
-    }
-  }
-`
+import { CREATE_WISH } from 'graphql/mutations'
+import { ME } from 'graphql/queries'
 
 const CreateWish = () => {
   const { id } = useContext(ProfileContext)
@@ -45,6 +29,7 @@ const CreateWish = () => {
     onCompleted: () => {
       setWishCreated(true)
     },
+    refetchQueries: [{ query: ME }],
   })
 
   if (wishCreated) {
@@ -69,13 +54,7 @@ const CreateWish = () => {
           })
         }}
       >
-        <Grid
-          container
-          direction="column"
-          // justify="center"
-          // alignItems="center"
-          spacing={2}
-        >
+        <Grid container direction="column" spacing={2}>
           <Grid item>
             <FormControl fullWidth>
               <Input

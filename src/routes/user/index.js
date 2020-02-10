@@ -1,26 +1,18 @@
 import React from 'react'
 import moment from 'moment'
-import { useQuery, useMutation } from '@apollo/react-hooks'
-import { gql } from 'apollo-boost'
-import { Link, useParams } from 'react-router-dom'
+import { useQuery } from '@apollo/react-hooks'
+import { useParams } from 'react-router-dom'
 
 import { makeStyles } from '@material-ui/core/styles'
 import Container from '@material-ui/core/Container'
 import Grid from '@material-ui/core/Grid'
 import Card from '@material-ui/core/Card'
-import Button from '@material-ui/core/Button'
 import CardMedia from '@material-ui/core/CardMedia'
 import CardHeader from '@material-ui/core/CardHeader'
-import CardActions from '@material-ui/core/CardActions'
-import IconButton from '@material-ui/core/IconButton'
 import Avatar from '@material-ui/core/Avatar'
-import AddCircleOutlineOutlined from '@material-ui/icons/AddCircleOutlineOutlined'
-import DeleteOutlined from '@material-ui/icons/DeleteOutlined'
-import RedeemOutlined from '@material-ui/icons/RedeemOutlined'
-import MoreVertOutlined from '@material-ui/icons/MoreVertOutlined'
 import Typography from '@material-ui/core/Typography'
-import Menu from '@material-ui/core/Menu'
-import MenuItem from '@material-ui/core/MenuItem'
+
+import { GET_USER } from 'graphql/queries'
 
 const useStyles = makeStyles({
   card: {
@@ -54,25 +46,9 @@ const useStyles = makeStyles({
   },
 })
 
-const USER = gql`
-  query User($username: String!) {
-    user(username: $username) {
-      id
-      username
-      wishes {
-        id
-        title
-        description
-        imageUrl
-        createdAt
-      }
-    }
-  }
-`
-
 const User = () => {
   const { username } = useParams()
-  const { data, loading } = useQuery(USER, {
+  const { data, loading } = useQuery(GET_USER, {
     variables: {
       username,
     },

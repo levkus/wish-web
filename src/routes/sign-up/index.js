@@ -1,6 +1,5 @@
 import React, { useState, useContext } from 'react'
 import { useMutation } from '@apollo/react-hooks'
-import { gql } from 'apollo-boost'
 import { Redirect } from 'react-router-dom'
 import { Link as RouterLink } from 'react-router-dom'
 
@@ -17,13 +16,9 @@ import Grid from '@material-ui/core/Grid'
 import Container from '@material-ui/core/Container'
 import Typography from '@material-ui/core/Typography'
 
-const storage = window.localStorage
+import { SIGN_UP } from 'graphql/mutations'
 
-const SIGN_UP = gql`
-  mutation SignUp($username: String!, $password: String!, $email: String!) {
-    signUp(username: $username, password: $password, email: $email)
-  }
-`
+const storage = window.localStorage
 
 const SignUp = () => {
   const profile = useContext(ProfileContext)
