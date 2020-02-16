@@ -17,9 +17,21 @@ export const ME = gql`
   }
 `
 
+export const GET_FRIENDS = gql`
+  query Friends {
+    me {
+      id
+      friends {
+        id
+        username
+      }
+    }
+  }
+`
+
 export const GET_USERS = gql`
-  query Users {
-    users {
+  query Users($subString: String!) {
+    users(subString: $subString) {
       id
       username
     }
@@ -38,6 +50,10 @@ export const GET_USER = gql`
         imageUrl
         createdAt
       }
+    }
+    friendshipStatus(username: $username) {
+      id
+      status
     }
   }
 `

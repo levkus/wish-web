@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useRef, useEffect } from 'react'
 import { useMutation } from '@apollo/react-hooks'
 import { Redirect } from 'react-router-dom'
 import { Link as RouterLink } from 'react-router-dom'
@@ -32,6 +32,11 @@ const SignUp = () => {
     },
   })
 
+  const inputRef = useRef()
+  useEffect(() => {
+    inputRef.current.focus()
+  }, [])
+
   if (error) {
     return (
       <div>
@@ -64,6 +69,7 @@ const SignUp = () => {
           <Grid item>
             <FormControl fullWidth>
               <Input
+                inputRef={inputRef}
                 id="username"
                 startAdornment={
                   <InputAdornment position="start">

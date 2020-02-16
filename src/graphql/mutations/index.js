@@ -35,3 +35,17 @@ export const DELETE_WISH = gql`
     deleteWish(id: $id)
   }
 `
+
+export const REQUEST_FRIENDSHIP = gql`
+  mutation RequestFriendship($ResponderId: Int!) {
+    requestFriendship(ResponderId: $ResponderId) {
+      status
+    }
+  }
+`
+
+export const DELETE_FRIENDSHIP_REQUEST = gql`
+  mutation DeleteFriendshipRequest($id: Int!) {
+    deleteFriendshipRequest(id: $id)
+  }
+`

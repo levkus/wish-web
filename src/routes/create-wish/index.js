@@ -24,6 +24,7 @@ const CreateWish = () => {
   const [description, setDescription] = useState('')
   const [imageUrl, setImageUrl] = useState('')
   const [isImageUploading, setIsImageUploading] = useState(false)
+  const [isCancelPressed, setIsCancelPresses] = useState(false)
 
   const [createWish, { loading }] = useMutation(CREATE_WISH, {
     onCompleted: () => {
@@ -32,7 +33,7 @@ const CreateWish = () => {
     refetchQueries: [{ query: ME }],
   })
 
-  if (wishCreated) {
+  if (wishCreated || isCancelPressed) {
     return <Redirect to="/my-wishlist" />
   }
 
@@ -41,11 +42,6 @@ const CreateWish = () => {
       <Typography variant="h3" component="h1" gutterBottom>
         Ммм... новая хотелка?
       </Typography>
-      <Dropzone
-        setUrl={setImageUrl}
-        setLoading={setIsImageUploading}
-        previewSrc={imageUrl}
-      />
       <form
         onSubmit={e => {
           e.preventDefault()
@@ -79,6 +75,13 @@ const CreateWish = () => {
             </FormControl>
           </Grid>
           <Grid item>
+            <Dropzone
+              setUrl={setImageUrl}
+              setLoading={setIsImageUploading}
+              previewSrc={imageUrl}
+            />
+          </Grid>
+          <Grid item>
             <Grid container spacing={2}>
               <Grid item>
                 <FormControl>
@@ -94,7 +97,14 @@ const CreateWish = () => {
               </Grid>
               <Grid item>
                 <FormControl>
-                  <Button color="secondary">Отмена</Button>
+                  <Button
+                    color="secondary"
+                    onClick={() => {
+                      setIsCancelPresses(true)
+                    }}
+                  >
+                    Отмена
+                  </Button>
                 </FormControl>
               </Grid>
             </Grid>

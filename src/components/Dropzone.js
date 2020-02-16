@@ -13,7 +13,7 @@ const SINGLE_UPLOAD = gql`
 `
 
 function Dropzone({ setUrl, setLoading, previewSrc }) {
-  const [singleUpload, { loading, error }] = useMutation(SINGLE_UPLOAD, {
+  const [singleUpload, { loading }] = useMutation(SINGLE_UPLOAD, {
     onCompleted: ({ singleUpload }) => {
       setUrl(singleUpload)
     },

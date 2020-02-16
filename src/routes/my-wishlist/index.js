@@ -18,6 +18,8 @@ import Typography from '@material-ui/core/Typography'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
 
+import Loader from 'components/Loader'
+
 import { ME } from 'graphql/queries'
 import { DELETE_WISH } from 'graphql/mutations'
 
@@ -105,46 +107,46 @@ const MyWishlist = () => {
   const { data, loading } = useQuery(ME)
   const classes = useStyles()
 
-  if (loading || !data) {
-    return <div>Loading...</div>
-  }
-
-  const { me } = data
+  const reverseWishes = data ? [...data.me.wishes].reverse() : []
 
   return (
-    <Container maxWidth="md">
-      <Typography variant="h2" component="h1" gutterBottom>
-        Мой вишлист
-      </Typography>
-      <Grid container spacing={2}>
-        <Grid item xs={12} sm={6} md={4}>
-          <Link to="/create-wish">
-            <Card className={classes.cardAdd}>
-              <AddCircleOutlineOutlined />
-            </Card>
-          </Link>
-        </Grid>
-        {me.wishes.map(wish => {
-          return (
-            <Grid item key={wish.id} xs={12} sm={6} md={4}>
-              <Card className={classes.card}>
-                <CardHeader
-                  avatar={
-                    <Avatar aria-label="avatar">
-                      {me.username.charAt(0).toUpperCase()}
-                    </Avatar>
-                  }
-                  title={wish.title}
-                  subheader={moment(Number(wish.createdAt)).format('DD.MM.YY')}
-                  action={<WishMenu wish={wish} />}
-                />
-                <CardMedia className={classes.media} image={wish.imageUrl} />
+    <Loader isLoading={loading}>
+      <Container maxWidth="md">
+        <Typography variant="h2" component="h1" gutterBottom>
+          Мой вишлист
+        </Typography>
+        <Grid container spacing={2}>
+          <Grid item xs={12} sm={6} md={4}>
+            <Link to="/create-wish">
+              <Card className={classes.cardAdd}>
+                <AddCircleOutlineOutlined fontSize="large" />
               </Card>
-            </Grid>
-          )
-        })}
-      </Grid>
-    </Container>
+            </Link>
+          </Grid>
+          {reverseWishes.map(wish => {
+            return (
+              <Grid item key={wish.id} xs={12} sm={6} md={4}>
+                <Card className={classes.card}>
+                  <CardHeader
+                    avatar={
+                      <Avatar aria-label="avatar">
+                        {data?.me.username.charAt(0).toUpperCase()}
+                      </Avatar>
+                    }
+                    title={wish.title}
+                    subheader={moment(Number(wish.createdAt)).format(
+                      'DD.MM.YY',
+                    )}
+                    action={<WishMenu wish={wish} />}
+                  />
+                  <CardMedia className={classes.media} image={wish.imageUrl} />
+                </Card>
+              </Grid>
+            )
+          })}
+        </Grid>
+      </Container>
+    </Loader>
   )
 }
 

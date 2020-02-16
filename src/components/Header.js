@@ -8,23 +8,27 @@ import {
   AppBar,
   Toolbar,
   Typography,
-  Link,
   Avatar,
   Menu,
   Grid,
   MenuItem,
+  Button,
 } from '@material-ui/core'
 
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
-    marginBottom: theme.spacing(4),
+  },
+  links: {
+    flexGrow: 1,
   },
   menuButton: {
     cursor: 'pointer',
   },
   title: {
     flexGrow: 1,
+    alignItems: 'center',
+    display: 'flex',
   },
   avatar: {
     marginRight: theme.spacing(1),
@@ -32,6 +36,9 @@ const useStyles = makeStyles(theme => ({
   offset: theme.mixins.toolbar,
   appBar: {
     boxShadow: 'none',
+  },
+  icon: {
+    marginRight: theme.spacing(1),
   },
 }))
 
@@ -74,10 +81,8 @@ const ProfileMenu = () => {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleClose}>
-          <Link to="/my-wishlist" component={RouterLink}>
-            Мой вишлист
-          </Link>
+        <MenuItem component={RouterLink} to="/my-profile">
+          Профиль
         </MenuItem>
         <MenuItem
           onClick={() => {
@@ -100,10 +105,46 @@ export default function Header() {
     <div className={classes.root}>
       <AppBar position="fixed" color="inherit" className={classes.appBar}>
         <Toolbar>
-          <Typography variant="h4" className={classes.title}>
-            Вишлист
-          </Typography>
-          {!profile.error && !profile.loading && <ProfileMenu />}
+          <Grid container alignItems="center">
+            {!profile.error && !profile.loading && (
+              <>
+                <Grid item className={classes.links}>
+                  <Grid container>
+                    <Grid item>
+                      <Button
+                        component={RouterLink}
+                        to="/my-wishlist"
+                        color="inherit"
+                      >
+                        Мой вишлист
+                      </Button>
+                    </Grid>
+                    <Grid item>
+                      <Button
+                        component={RouterLink}
+                        to="/friends"
+                        color="inherit"
+                      >
+                        Друзья
+                      </Button>
+                    </Grid>
+                    <Grid item>
+                      <Button
+                        component={RouterLink}
+                        to="/user-search"
+                        color="inherit"
+                      >
+                        Поиск
+                      </Button>
+                    </Grid>
+                  </Grid>
+                </Grid>
+                <Grid item>
+                  <ProfileMenu />
+                </Grid>
+              </>
+            )}
+          </Grid>
         </Toolbar>
       </AppBar>
       <div className={classes.offset} />
