@@ -99,6 +99,7 @@ const CreateWish = () => {
                 <FormControl>
                   <Button
                     color="secondary"
+                    disabled={loading || isImageUploading}
                     onClick={() => {
                       setIsCancelPresses(true)
                     }}

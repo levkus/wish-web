@@ -14,8 +14,8 @@ const UnderConstruction = () => {
           <img src={gif} />
         </Grid>
         <Grid item>
-          <Typography variant="h6" component="h1">
-            НАШИ ЛУЧШИЕ СПЕЦИАЛИСТЫ РАБОТАЮТ НАД ЭТИМ
+          <Typography variant="body1" component="h1">
+            Наши лучшие специалисты работают над этим
           </Typography>
         </Grid>
       </Grid>

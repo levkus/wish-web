@@ -66,7 +66,10 @@ const ProfileMenu = () => {
         className={classes.menuButton}
       >
         <Grid item>
-          <Avatar className={classes.avatar}>
+          <Avatar
+            className={classes.avatar}
+            style={{ backgroundColor: profile.color }}
+          >
             {profile.username.charAt(0).toUpperCase()}
           </Avatar>
         </Grid>

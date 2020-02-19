@@ -13,6 +13,8 @@ import SearchOutlined from '@material-ui/icons/SearchOutlined'
 import InputAdornment from '@material-ui/core/InputAdornment'
 import CircularProgress from '@material-ui/core/CircularProgress'
 
+import UserCard from 'components/UserCard'
+
 import { GET_USERS } from 'graphql/queries'
 
 const UserSearch = () => {
@@ -39,58 +41,45 @@ const UserSearch = () => {
 
   return (
     <Container maxWidth="md">
-      <FormControl fullWidth>
-        <Input
-          startAdornment={
-            <InputAdornment position="start">
-              <SearchOutlined />
-            </InputAdornment>
-          }
-          endAdornment={
-            loading && (
-              <InputAdornment position="end">
-                <CircularProgress size={16} />
-              </InputAdornment>
-            )
-          }
-          inputRef={inputRef}
-          placeholder="Начни писать имя пользователя"
-          onChange={e => {
-            setTerm(e.target.value)
-          }}
-          onKeyPress={e => {
-            if (e.key === 'Enter' && data.users.length > 0) {
-              setnavigateToUser(data.users[0].username)
-            }
-          }}
-          value={term}
-        />
-      </FormControl>
-      <Grid container spacing={2}>
-        {data?.users.map(user => {
-          return (
-            <Grid key={user.id} item xs={12}>
-              <Paper>
-                <Grid container alignItems="center" spacing={2}>
-                  <Grid item>
-                    <Avatar aria-label="avatar">
-                      {user.username.charAt(0).toUpperCase()}
-                    </Avatar>
-                  </Grid>
-                  <Grid item>
-                    <Typography
-                      component={RouterLink}
-                      to={`/users/${user.username}`}
-                      key={user.id}
-                    >
-                      {user.username}
-                    </Typography>
-                  </Grid>
-                </Grid>
-              </Paper>
-            </Grid>
-          )
-        })}
+      <Grid direction="column" spacing={4} container>
+        <Grid item>
+          <FormControl fullWidth>
+            <Input
+              startAdornment={
+                <InputAdornment position="start">
+                  <SearchOutlined />
+                </InputAdornment>
+              }
+              endAdornment={
+                loading && (
+                  <InputAdornment position="end">
+                    <CircularProgress size={16} />
+                  </InputAdornment>
+                )
+              }
+              inputRef={inputRef}
+              placeholder="Начни писать никнейм"
+              onChange={e => {
+                setTerm(e.target.value)
+              }}
+              onKeyPress={e => {
+                if (e.key === 'Enter' && data.users.length > 0) {
+                  setnavigateToUser(data.users[0].username)
+                }
+              }}
+              value={term}
+            />
+          </FormControl>
+        </Grid>
+        <Grid item>
+          <Grid direction="column" container spacing={2}>
+            {data?.users.map(user => (
+              <Grid key={user.id} item>
+                <UserCard user={user} />
+              </Grid>
+            ))}
+          </Grid>
+        </Grid>
       </Grid>
     </Container>
   )

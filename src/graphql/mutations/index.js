@@ -36,6 +36,28 @@ export const DELETE_WISH = gql`
   }
 `
 
+export const TAKE_WISH = gql`
+  mutation TakeWish($id: Int!) {
+    takeWish(id: $id) {
+      id
+      title
+      giver {
+        id
+        username
+      }
+    }
+  }
+`
+
+export const ABANDON_WISH = gql`
+  mutation AbandonWish($id: Int!) {
+    abandonWish(id: $id) {
+      id
+      title
+    }
+  }
+`
+
 export const REQUEST_FRIENDSHIP = gql`
   mutation RequestFriendship($ResponderId: Int!) {
     requestFriendship(ResponderId: $ResponderId) {
@@ -47,5 +69,13 @@ export const REQUEST_FRIENDSHIP = gql`
 export const DELETE_FRIENDSHIP_REQUEST = gql`
   mutation DeleteFriendshipRequest($id: Int!) {
     deleteFriendshipRequest(id: $id)
+  }
+`
+
+export const ACCEPT_FRIENDSHIP_REQUEST = gql`
+  mutation AcceptFriendshipRequest($id: Int!) {
+    acceptFriendshipRequest(id: $id) {
+      id
+    }
   }
 `

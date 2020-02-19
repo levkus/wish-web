@@ -6,6 +6,7 @@ export const ME = gql`
       id
       username
       email
+      color
       wishes {
         id
         title
@@ -24,6 +25,26 @@ export const GET_FRIENDS = gql`
       friends {
         id
         username
+        color
+        wishes {
+          id
+        }
+      }
+      incomingFriendshipRequests {
+        id
+        username
+        color
+        wishes {
+          id
+        }
+      }
+      outgoingFriendshipRequests {
+        id
+        username
+        color
+        wishes {
+          id
+        }
       }
     }
   }
@@ -34,6 +55,10 @@ export const GET_USERS = gql`
     users(subString: $subString) {
       id
       username
+      color
+      wishes {
+        id
+      }
     }
   }
 `
@@ -43,17 +68,28 @@ export const GET_USER = gql`
     user(username: $username) {
       id
       username
+      color
       wishes {
         id
         title
         description
         imageUrl
         createdAt
+        giver {
+          id
+          username
+        }
       }
     }
     friendshipStatus(username: $username) {
       id
       status
+      requester {
+        id
+      }
+      responder {
+        id
+      }
     }
   }
 `
