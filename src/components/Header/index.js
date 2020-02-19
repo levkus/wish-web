@@ -15,6 +15,8 @@ import {
   Button,
 } from '@material-ui/core'
 
+import logo from './assets/logo.svg'
+
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
@@ -39,6 +41,10 @@ const useStyles = makeStyles(theme => ({
   },
   icon: {
     marginRight: theme.spacing(1),
+  },
+  logo: {
+    marginRight: theme.spacing(1),
+    width: '128px',
   },
 }))
 
@@ -108,6 +114,7 @@ export default function Header() {
     <div className={classes.root}>
       <AppBar position="fixed" color="inherit" className={classes.appBar}>
         <Toolbar>
+          <img src={logo} className={classes.logo} alt="logo" />
           <Grid container alignItems="center">
             {!profile.error && !profile.loading && (
               <>

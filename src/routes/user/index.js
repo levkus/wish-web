@@ -172,7 +172,7 @@ const User = () => {
                 <Grid container spacing={2}>
                   {data?.user.wishes.map(wish => {
                     return (
-                      <Grid item key={wish.id} xs={12} sm={6} md={4}>
+                      <Grid item key={wish.id} xs={12}>
                         <WishCard wish={wish} user={data?.user} showActions />
                       </Grid>
                     )

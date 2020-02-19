@@ -22,15 +22,15 @@ import { ME } from 'graphql/queries'
 const marks = [
   {
     value: 1,
-    // label: 'позязя',
+    label: 'Хочу',
   },
   {
     value: 2,
-    // label: '2',
+    label: 'Очень хочу!',
   },
   {
     value: 3,
-    // label: '3',
+    label: 'Сплю и вижу!',
   },
 ]
 

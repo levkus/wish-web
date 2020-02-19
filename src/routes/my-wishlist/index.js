@@ -35,20 +35,27 @@ const MyWishlist = () => {
     <Loader isLoading={loading}>
       {hasWishes ? (
         <Container maxWidth="md">
-          <Typography variant="h2" component="h1" gutterBottom>
-            Мой вишлист
-          </Typography>
-          <Grid container spacing={2}>
-            <Grid item xs={12} sm={6} md={4}>
-              <Link to="/create-wish">
-                <Card className={classes.cardAdd}>
-                  <AddCircleOutlineOutlined fontSize="large" />
-                </Card>
-              </Link>
+          <Grid container alignItems="center" justify="space-between">
+            <Grid item>
+              <Typography variant="h2" component="h1" gutterBottom>
+                Мой вишлист
+              </Typography>
             </Grid>
+            <Grid item>
+              <Button
+                component={Link}
+                to="/create-wish"
+                variant="contained"
+                color="primary"
+              >
+                Создать хотелку
+              </Button>
+            </Grid>
+          </Grid>
+          <Grid container spacing={2}>
             {data?.me.wishes.map(wish => {
               return (
-                <Grid item key={wish.id} xs={12} sm={6} md={4}>
+                <Grid item key={wish.id} xs={12}>
                   <WishCard wish={wish} user={data?.me} showMenu />
                 </Grid>
               )

@@ -5,8 +5,11 @@ import { useMutation } from '@apollo/react-hooks'
 import { makeStyles } from '@material-ui/core/styles'
 import Divider from '@material-ui/core/Divider'
 import Card from '@material-ui/core/Card'
+import Link from '@material-ui/core/Link'
+import Paper from '@material-ui/core/Card'
 import Box from '@material-ui/core/Box'
 import Grid from '@material-ui/core/Grid'
+import Chip from '@material-ui/core/Chip'
 import CardMedia from '@material-ui/core/CardMedia'
 import CardHeader from '@material-ui/core/CardHeader'
 import CardActions from '@material-ui/core/CardActions'
@@ -31,16 +34,39 @@ import { ME, GET_USER } from 'graphql/queries'
 
 import placeholder from './assets/placeholder.png'
 
-const useStyles = makeStyles({
-  card: {
-    minWidth: 275,
-    height: '100%',
+const useStyles = makeStyles(theme => ({
+  image: {
+    width: '100%',
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    paddingTop: '100%',
+    [theme.breakpoints.down('xs')]: {
+      paddingTop: '56.25%',
+    },
   },
-  media: {
-    height: 0,
-    paddingTop: '56.25%',
+  content: {
+    padding: theme.spacing(2),
   },
-})
+  grow: {
+    flexGrow: 1,
+  },
+  marginTop: {
+    marginTop: 'auto',
+  },
+}))
+
+const getChiplabel = priority => {
+  switch (priority) {
+    case 1:
+      return 'Хочу!'
+    case 2:
+      return 'Очень хочу!'
+    case 3:
+      return 'Сплю и вижу!'
+    default:
+      return null
+  }
+}
 
 const WishMenu = ({ wish }) => {
   const [anchorEl, setAnchorEl] = React.useState(null)
@@ -96,29 +122,27 @@ const WishActions = ({ wish, user, me }) => {
   const [abandonWish] = useMutation(ABANDON_WISH)
   if (wish.giver?.id === me.id) {
     return (
-      <>
-        <Button
-          color="secondary"
-          startIcon={<SentimentVeryDissatisfied />}
-          onClick={() => {
-            abandonWish({
-              variables: {
-                id: wish.id,
-              },
-              refetchQueries: [
-                {
-                  query: GET_USER,
-                  variables: {
-                    username: user.username,
-                  },
+      <Button
+        color="secondary"
+        startIcon={<SentimentVeryDissatisfied />}
+        onClick={() => {
+          abandonWish({
+            variables: {
+              id: wish.id,
+            },
+            refetchQueries: [
+              {
+                query: GET_USER,
+                variables: {
+                  username: user.username,
                 },
-              ],
-            })
-          }}
-        >
-          Не дарить
-        </Button>
-      </>
+              },
+            ],
+          })
+        }}
+      >
+        Не дарить
+      </Button>
     )
   }
   if (wish.giver && wish.giver.id !== me.id) {
@@ -154,80 +178,95 @@ const WishCard = ({ user, wish, showMenu, showActions }) => {
   const classes = useStyles()
 
   return (
-    <Card className={classes.card}>
-      <CardHeader
-        avatar={
-          <Avatar aria-label="user" style={{ backgroundColor: user.color }}>
-            {user.username.charAt(0).toUpperCase()}
-          </Avatar>
-        }
-        title={wish.title}
-        subheader={`~${wish.price} ₽`}
-        action={showMenu && <WishMenu wish={wish} />}
-      />
-
-      <CardMedia
-        className={classes.media}
-        image={wish.imageUrl || placeholder}
-      />
-      <Divider />
-      <Box>
-        <ButtonGroup size="small" variant="text" fullWidth>
-          {wish.link && (
-            <Button
-              startIcon={<PublicOutlined size="small" />}
-              component="a"
-              href={wish.link}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Ссылка
-            </Button>
-          )}
-
-          <Button
-            startIcon={<SearchOutlined />}
-            component="a"
-            href={`http://www.google.com/search?q=${wish.title}`}
-            target="_blank"
-            rel="noopener noreferrer"
+    <Paper className={classes.card}>
+      <Grid container>
+        <Grid item xs={12} sm={3}>
+          <Box
+            style={{
+              backgroundImage: `url('${wish.imageUrl || placeholder}')`,
+            }}
+            className={classes.image}
+          ></Box>
+        </Grid>
+        <Grid item xs={12} sm={9} className={classes.content}>
+          <Grid
+            direction="column"
+            justify="space-between"
+            container
+            className={classes.grow}
+            style={{ height: '100%' }}
           >
-            Найти
-          </Button>
-
-          <Button
-            startIcon={<ShoppingCartOutlined />}
-            component="a"
-            href={`https://market.yandex.ru/search?text=${wish.title}`}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Маркет
-          </Button>
-        </ButtonGroup>
-      </Box>
-      <Divider />
-      <CardContent>
-        <Typography
-          noWrap
-          title={wish.description}
-          variant="body2"
-          color="textSecondary"
-          component="p"
-        >
-          {wish.description || 'Нет описания :('}
-        </Typography>
-      </CardContent>
-      {showActions && (
-        <CardActions disableSpacing>
-          <Grid container>
             <Grid item>
-              <WishActions wish={wish} user={user} me={profile} />
+              <Grid container alignItems="center">
+                <Grid item className={classes.grow}>
+                  <Typography variant="h6">{wish.title}</Typography>
+                </Grid>
+                <Grid item>
+                  <Chip
+                    label={getChiplabel(wish.priority)}
+                    color="secondary"
+                    size="small"
+                  />
+                </Grid>
+              </Grid>
+            </Grid>
+            <Grid item>
+              <Typography gutterBottom>{`~${wish.price} ₽`}</Typography>
+              {wish.description && (
+                <Typography
+                  gutterBottom
+                  title={wish.description}
+                  variant="body2"
+                  color="textSecondary"
+                  component="p"
+                >
+                  {wish.description}
+                </Typography>
+              )}
+              {wish.link && (
+                <Typography gutterBottom>
+                  <Link href={wish.link}>{wish.link}</Link>
+                </Typography>
+              )}
+            </Grid>
+            <Grid item className={classes.marginTop}>
+              <Grid
+                container
+                justify={showActions ? 'space-between' : 'flex-start'}
+              >
+                {showActions && (
+                  <Grid item className={classes.grow}>
+                    <WishActions wish={wish} user={user} me={profile} />
+                  </Grid>
+                )}
+                <Grid item>
+                  <Button
+                    startIcon={<SearchOutlined />}
+                    component="a"
+                    href={`http://www.google.com/search?q=${wish.title}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Найти в Google
+                  </Button>
+                </Grid>
+                <Grid item>
+                  <Button
+                    startIcon={<ShoppingCartOutlined />}
+                    component="a"
+                    href={`https://market.yandex.ru/search?text=${wish.title}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Найти в Яндекс.Маркете
+                  </Button>
+                </Grid>
+              </Grid>
             </Grid>
           </Grid>
-        </CardActions>
-      )}
-    </Card>
+        </Grid>
+      </Grid>
+    </Paper>
   )
 }
 
