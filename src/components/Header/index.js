@@ -91,7 +91,16 @@ const ProfileMenu = () => {
         onClose={handleClose}
       >
         <MenuItem component={RouterLink} to="/my-profile">
-          Профиль
+          Мой профиль
+        </MenuItem>
+        <MenuItem component={RouterLink} to="/my-wishlist">
+          Мой вишлист
+        </MenuItem>
+        <MenuItem component={RouterLink} to="/friends">
+          Друзья
+        </MenuItem>
+        <MenuItem component={RouterLink} to="/user-search">
+          Поиск
         </MenuItem>
         <MenuItem
           onClick={() => {
