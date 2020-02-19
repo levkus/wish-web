@@ -78,7 +78,7 @@ const MyWishlist = () => {
                 variant="contained"
                 color="primary"
               >
-                Добавить желание
+                Создать хотелку
               </Button>
             </Grid>
           </Grid>

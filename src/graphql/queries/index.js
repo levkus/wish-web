@@ -11,6 +11,10 @@ export const ME = gql`
         id
         title
         description
+        price
+        currency
+        priority
+        link
         imageUrl
         createdAt
       }
@@ -73,6 +77,10 @@ export const GET_USER = gql`
         id
         title
         description
+        price
+        currency
+        priority
+        link
         imageUrl
         createdAt
         giver {

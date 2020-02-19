@@ -17,13 +17,19 @@ export const CREATE_WISH = gql`
     $title: String!
     $description: String!
     $imageUrl: String
-    $UserId: Int!
+    $price: String
+    $priority: Int
+    $link: String
+    $currency: String
   ) {
     createWish(
       title: $title
       description: $description
       imageUrl: $imageUrl
-      UserId: $UserId
+      price: $price
+      priority: $priority
+      link: $link
+      currency: $currency
     ) {
       id
     }

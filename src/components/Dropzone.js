@@ -19,10 +19,10 @@ const useStyles = makeStyles(theme => ({
     },
   },
   dropArea: {
-    minHeight: '100px',
+    minHeight: '128px',
   },
   image: {
-    maxHeight: '100px',
+    maxHeight: '128px',
     display: 'block',
   },
 }))
