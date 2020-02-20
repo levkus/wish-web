@@ -1,12 +1,9 @@
-import React, { useState, useContext } from 'react'
+import React, { useState } from 'react'
 import { useMutation } from '@apollo/react-hooks'
 import { useForm } from 'react-hook-form'
 import { Redirect } from 'react-router-dom'
 
-import { ProfileContext } from 'context/profile'
-
 import Button from '@material-ui/core/Button'
-import Input from '@material-ui/core/Input'
 import TextField from '@material-ui/core/TextField'
 import FormControl from '@material-ui/core/FormControl'
 import Grid from '@material-ui/core/Grid'
