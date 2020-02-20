@@ -197,9 +197,21 @@ const WishCard = ({ user, wish, showMenu, showActions }) => {
             style={{ height: '100%' }}
           >
             <Grid item>
+              <Grid container alignItems="center" justify="space-between">
+                <Grid item>
+                  <Typography variant="h6">{wish.title}</Typography>
+                </Grid>
+                {showMenu && (
+                  <Grid item>
+                    <WishMenu />
+                  </Grid>
+                )}
+              </Grid>
+            </Grid>
+            <Grid item>
               <Grid container alignItems="center">
                 <Grid item className={classes.grow}>
-                  <Typography variant="h6">{wish.title}</Typography>
+                  <Typography gutterBottom>{`~${wish.price} ₽`}</Typography>
                 </Grid>
                 <Grid item>
                   <Chip
@@ -211,7 +223,6 @@ const WishCard = ({ user, wish, showMenu, showActions }) => {
               </Grid>
             </Grid>
             <Grid item>
-              <Typography gutterBottom>{`~${wish.price} ₽`}</Typography>
               {wish.description && (
                 <Typography
                   gutterBottom

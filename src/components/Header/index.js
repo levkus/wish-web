@@ -100,7 +100,7 @@ const ProfileMenu = () => {
           Друзья
         </MenuItem>
         <MenuItem component={RouterLink} to="/user-search">
-          Поиск
+          Поиск людей
         </MenuItem>
         <MenuItem
           onClick={() => {
@@ -153,7 +153,7 @@ export default function Header() {
                         to="/user-search"
                         color="inherit"
                       >
-                        Поиск
+                        Поиск людей
                       </Button>
                     </Grid>
                   </Grid>
