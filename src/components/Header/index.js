@@ -13,6 +13,7 @@ import {
   Grid,
   MenuItem,
   Button,
+  Badge,
 } from '@material-ui/core'
 
 import logo from './assets/logo.svg'
@@ -128,7 +129,7 @@ export default function Header() {
             {!profile.error && !profile.loading && (
               <>
                 <Grid item className={classes.links}>
-                  <Grid container>
+                  <Grid container spacing={2}>
                     <Grid item>
                       <Button
                         component={RouterLink}
@@ -139,13 +140,19 @@ export default function Header() {
                       </Button>
                     </Grid>
                     <Grid item>
-                      <Button
-                        component={RouterLink}
-                        to="/friends"
-                        color="inherit"
+                      <Badge
+                        badgeContent={profile.incomingFriendshipRequests.length}
+                        // variant="dot"
+                        color="secondary"
                       >
-                        Друзья
-                      </Button>
+                        <Button
+                          component={RouterLink}
+                          to="/friends"
+                          color="inherit"
+                        >
+                          Друзья
+                        </Button>
+                      </Badge>
                     </Grid>
                     <Grid item>
                       <Button

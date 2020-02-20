@@ -46,7 +46,7 @@ const useStyles = makeStyles(theme => ({
   },
   headerWrap: {},
   content: {
-    marginTop: theme.spacing(12),
+    marginTop: theme.spacing(16),
     flexGrow: 1,
   },
 }))

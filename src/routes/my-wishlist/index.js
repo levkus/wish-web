@@ -88,6 +88,15 @@ const MyWishlist = () => {
                 Создать хотелку
               </Button>
             </Grid>
+            <Grid item>
+              <Typography align="center">
+                Но вероятно ты тут чтобы выбрать подарок для{' '}
+                <Link to="/users/noch212">@noch212</Link> :)
+              </Typography>
+              <Typography align="center">
+                Скорее добавь ее в друзья <Link to="/users/noch212">тут</Link>!
+              </Typography>
+            </Grid>
           </Grid>
         </Container>
       )}

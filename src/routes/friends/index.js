@@ -59,9 +59,20 @@ const Friends = () => {
           onChange={handleChange}
           aria-label="simple tabs example"
         >
-          <Tab label="Друзья" {...a11yProps(0)} />
-          <Tab label="Входящие" {...a11yProps(1)} />
-          <Tab label="Исходящие" {...a11yProps(2)} />
+          <Tab
+            label={`Друзья (${data?.me.friends.length || 0})`}
+            {...a11yProps(0)}
+          />
+          <Tab
+            label={`Входящие (${data?.me.incomingFriendshipRequests.length ||
+              0})`}
+            {...a11yProps(1)}
+          />
+          <Tab
+            label={`Исходящие (${data?.me.outgoingFriendshipRequests.length ||
+              0})`}
+            {...a11yProps(2)}
+          />
         </Tabs>
         <TabPanel value={value} index={0}>
           <Grid direction="column" container spacing={2}>

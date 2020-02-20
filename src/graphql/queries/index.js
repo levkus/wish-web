@@ -18,6 +18,9 @@ export const ME = gql`
         imageUrl
         createdAt
       }
+      incomingFriendshipRequests {
+        id
+      }
     }
   }
 `

@@ -53,6 +53,9 @@ const useStyles = makeStyles(theme => ({
   marginTop: {
     marginTop: 'auto',
   },
+  link: {
+    maxWidth: '300px',
+  },
 }))
 
 const getChiplabel = priority => {
@@ -235,7 +238,7 @@ const WishCard = ({ user, wish, showMenu, showActions }) => {
                 </Typography>
               )}
               {wish.link && (
-                <Typography gutterBottom>
+                <Typography gutterBottom noWrap className={classes.link}>
                   <Link href={wish.link}>{wish.link}</Link>
                 </Typography>
               )}

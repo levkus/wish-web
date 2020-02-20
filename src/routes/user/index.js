@@ -12,7 +12,7 @@ import WishCard from 'components/WishCard'
 
 import { ProfileContext } from 'context/profile'
 
-import { GET_USER } from 'graphql/queries'
+import { GET_USER, ME } from 'graphql/queries'
 import {
   REQUEST_FRIENDSHIP,
   DELETE_FRIENDSHIP_REQUEST,
@@ -109,6 +109,9 @@ const User = () => {
                     variables: {
                       username,
                     },
+                  },
+                  {
+                    query: ME,
                   },
                 ],
               })
