@@ -203,7 +203,7 @@ const WishCard = ({ user, wish, showMenu, showActions }) => {
                 </Grid>
                 {showMenu && (
                   <Grid item>
-                    <WishMenu />
+                    <WishMenu wish={wish} />
                   </Grid>
                 )}
               </Grid>
