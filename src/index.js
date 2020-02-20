@@ -13,7 +13,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import PrivateRoute from 'components/PrivateRoute'
 import { ProfileProvider } from 'context/profile'
 
-// import Index from 'routes/index'
+import Index from 'routes/index'
 import Login from 'routes/login'
 import SignUp from 'routes/sign-up'
 import MyWishlist from 'routes/my-wishlist'
@@ -66,7 +66,7 @@ const App = () => {
               <Grid item className={classes.content}>
                 <Switch>
                   <Route exact path="/">
-                    <Login />
+                    <Index />
                   </Route>
                   <Route path="/login">
                     <Login />
