@@ -1,42 +1,27 @@
 import React, { useContext } from 'react'
-import { Link as RouterLink } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import { ProfileContext } from 'context/profile'
 
+import useMediaQuery from '@material-ui/core/useMediaQuery'
 import { makeStyles } from '@material-ui/core/styles'
-import {
-  AppBar,
-  Toolbar,
-  Typography,
-  Avatar,
-  Menu,
-  Grid,
-  MenuItem,
-  Button,
-  Badge,
-} from '@material-ui/core'
+import { AppBar, Toolbar, Grid } from '@material-ui/core'
+
+import ProfileMenu from './ProfileMenu'
+import DesktopMenu from './DesktopMenu'
+import MobileDrawer from './MobileDrawer'
 
 import logo from './assets/logo.svg'
 
 const useStyles = makeStyles(theme => ({
-  root: {
-    flexGrow: 1,
-  },
   links: {
     flexGrow: 1,
-  },
-  menuButton: {
-    cursor: 'pointer',
   },
   title: {
     flexGrow: 1,
     alignItems: 'center',
     display: 'flex',
   },
-  avatar: {
-    marginRight: theme.spacing(1),
-  },
-  offset: theme.mixins.toolbar,
   appBar: {
     boxShadow: 'none',
   },
@@ -47,133 +32,43 @@ const useStyles = makeStyles(theme => ({
     marginRight: theme.spacing(1),
     width: '128px',
   },
+  marginLeft: {
+    marginLeft: 'auto',
+  },
 }))
-
-const ProfileMenu = () => {
-  const [anchorEl, setAnchorEl] = React.useState(null)
-  const classes = useStyles()
-  const profile = useContext(ProfileContext)
-
-  const handleClick = event => {
-    setAnchorEl(event.currentTarget)
-  }
-
-  const handleClose = () => {
-    setAnchorEl(null)
-  }
-
-  return (
-    <div>
-      <Grid
-        container
-        alignItems="center"
-        aria-controls="simple-menu"
-        aria-haspopup="true"
-        onClick={handleClick}
-        className={classes.menuButton}
-      >
-        <Grid item>
-          <Avatar
-            className={classes.avatar}
-            style={{ backgroundColor: profile.color }}
-          >
-            {profile.username.charAt(0).toUpperCase()}
-          </Avatar>
-        </Grid>
-        <Grid item>
-          <Typography>{profile.username}</Typography>
-        </Grid>
-      </Grid>
-      <Menu
-        id="simple-menu"
-        anchorEl={anchorEl}
-        keepMounted
-        open={Boolean(anchorEl)}
-        onClose={handleClose}
-      >
-        <MenuItem component={RouterLink} to="/my-profile">
-          Мой профиль
-        </MenuItem>
-        <MenuItem component={RouterLink} to="/my-wishlist">
-          Мой вишлист
-        </MenuItem>
-        <MenuItem component={RouterLink} to="/friends">
-          Друзья
-        </MenuItem>
-        <MenuItem component={RouterLink} to="/user-search">
-          Поиск людей
-        </MenuItem>
-        <MenuItem
-          onClick={() => {
-            window.localStorage.removeItem('token')
-            window.location.reload()
-          }}
-        >
-          Выйти
-        </MenuItem>
-      </Menu>
-    </div>
-  )
-}
 
 export default function Header() {
   const profile = useContext(ProfileContext)
   const classes = useStyles()
+  const isSmall = useMediaQuery(theme => theme.breakpoints.down('sm'))
 
   return (
-    <div className={classes.root}>
+    <>
       <AppBar position="fixed" color="inherit" className={classes.appBar}>
         <Toolbar>
-          <img src={logo} className={classes.logo} alt="logo" />
-          <Grid container alignItems="center">
-            {!profile.error && !profile.loading && (
+          <Link to="/">
+            <img src={logo} className={classes.logo} alt="logo" />
+          </Link>
+          <Grid
+            container
+            alignItems="center"
+            justify={isSmall ? 'flex-end' : 'flex-start'}
+          >
+            {isSmall ? (
+              <MobileDrawer profile={profile} />
+            ) : (
               <>
                 <Grid item className={classes.links}>
-                  <Grid container spacing={2}>
-                    <Grid item>
-                      <Button
-                        component={RouterLink}
-                        to="/my-wishlist"
-                        color="inherit"
-                      >
-                        Мой вишлист
-                      </Button>
-                    </Grid>
-                    <Grid item>
-                      <Badge
-                        badgeContent={profile.incomingFriendshipRequests.length}
-                        // variant="dot"
-                        color="secondary"
-                      >
-                        <Button
-                          component={RouterLink}
-                          to="/friends"
-                          color="inherit"
-                        >
-                          Друзья
-                        </Button>
-                      </Badge>
-                    </Grid>
-                    <Grid item>
-                      <Button
-                        component={RouterLink}
-                        to="/user-search"
-                        color="inherit"
-                      >
-                        Поиск людей
-                      </Button>
-                    </Grid>
-                  </Grid>
+                  <DesktopMenu profile={profile} />
                 </Grid>
-                <Grid item>
-                  <ProfileMenu />
+                <Grid item className={classes.marginLeft}>
+                  <ProfileMenu profile={profile} />
                 </Grid>
               </>
             )}
           </Grid>
         </Toolbar>
       </AppBar>
-      <div className={classes.offset} />
-    </div>
+    </>
   )
 }

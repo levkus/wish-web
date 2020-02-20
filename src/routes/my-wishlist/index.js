@@ -2,6 +2,8 @@ import React from 'react'
 import { useQuery } from '@apollo/react-hooks'
 import { Link } from 'react-router-dom'
 
+import useMediaQuery from '@material-ui/core/useMediaQuery'
+
 import Container from '@material-ui/core/Container'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
@@ -14,6 +16,7 @@ import { ME } from 'graphql/queries'
 
 const MyWishlist = () => {
   const { data, loading } = useQuery(ME)
+  const isSmall = useMediaQuery(theme => theme.breakpoints.down('sm'))
 
   const hasWishes = data?.me.wishes.length > 0
 
@@ -52,7 +55,7 @@ const MyWishlist = () => {
         <Container maxWidth="sm">
           <Grid spacing={4} direction="column" alignItems="center" container>
             <Grid item>
-              <Typography variant="h2">
+              <Typography variant={isSmall ? 'h4' : 'h2'} align="center">
                 Привет,{' '}
                 <span style={{ color: data.me.color }}>{data.me.username}</span>
                 !

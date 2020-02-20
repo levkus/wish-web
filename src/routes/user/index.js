@@ -2,10 +2,14 @@ import React, { useContext } from 'react'
 import { useQuery, useMutation } from '@apollo/react-hooks'
 import { useParams, Redirect } from 'react-router-dom'
 
+import { makeStyles } from '@material-ui/core/styles'
+import useMediaQuery from '@material-ui/core/useMediaQuery'
 import Container from '@material-ui/core/Container'
 import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
+import Avatar from '@material-ui/core/Avatar'
+import Paper from '@material-ui/core/Paper'
 
 import Loader from 'components/Loader'
 import WishCard from 'components/WishCard'
@@ -19,8 +23,22 @@ import {
   ACCEPT_FRIENDSHIP_REQUEST,
 } from 'graphql/mutations'
 
+const useStyles = makeStyles(theme => ({
+  userContainer: {
+    padding: theme.spacing(4),
+  },
+  avatar: {
+    width: '96px',
+    height: '96px',
+    marginBottom: theme.spacing(2),
+    fontSize: '4rem',
+  },
+}))
+
 const User = () => {
   const profile = useContext(ProfileContext)
+  const isSmall = useMediaQuery(theme => theme.breakpoints.down('sm'))
+  const classes = useStyles()
   const { username } = useParams()
   const { data, loading } = useQuery(GET_USER, {
     variables: {
@@ -43,6 +61,7 @@ const User = () => {
       case 'accepted':
         return (
           <Button
+            size={isSmall ? 'small' : 'medium'}
             variant="contained"
             color="secondary"
             disabled={deleteLoading}
@@ -71,6 +90,7 @@ const User = () => {
         if (friendship.requester.id === profile.id) {
           return (
             <Button
+              size={isSmall ? 'small' : 'medium'}
               color="secondary"
               variant="contained"
               disabled={deleteLoading}
@@ -96,6 +116,7 @@ const User = () => {
         }
         return (
           <Button
+            size={isSmall ? 'small' : 'medium'}
             color="primary"
             variant="contained"
             disabled={acceptLoading}
@@ -124,6 +145,7 @@ const User = () => {
       default:
         return (
           <Button
+            size={isSmall ? 'small' : 'medium'}
             variant="contained"
             color="primary"
             disabled={requestLoading}
@@ -156,16 +178,32 @@ const User = () => {
   return (
     <Loader isLoading={loading}>
       <Container maxWidth="md">
-        <Grid container direction="row" spacing={8}>
+        <Grid container direction="column" spacing={8}>
           <Grid item xs={12}>
-            <Grid container justify="space-between" alignItems="center">
-              <Grid item>
-                <Typography variant="h2" component="h1">
-                  {data?.user.username}
-                </Typography>
+            <Paper className={classes.userContainer}>
+              <Grid container direction="column" alignItems="center">
+                <Grid item>
+                  <Avatar
+                    className={classes.avatar}
+                    style={{ backgroundColor: data?.user.color }}
+                  >
+                    {data?.user.username.charAt(0).toUpperCase()}
+                  </Avatar>
+                </Grid>
+                <Grid item>
+                  <Typography
+                    gutterBottom
+                    variant={isSmall ? 'h4' : 'h3'}
+                    component="h1"
+                  >
+                    {data?.user.username}
+                  </Typography>
+                </Grid>
+                <Grid item>
+                  {renderFriendshipBlock(data?.friendshipStatus)}
+                </Grid>
               </Grid>
-              <Grid item>{renderFriendshipBlock(data?.friendshipStatus)}</Grid>
-            </Grid>
+            </Paper>
           </Grid>
           <Grid item xs={12}>
             {data?.user.wishes.length > 0 ? (
@@ -184,7 +222,7 @@ const User = () => {
                 </Grid>
               </>
             ) : (
-              <Typography>
+              <Typography align="center">
                 {`Кажется ${data?.user.username} ничего не хочет...`}
               </Typography>
             )}
