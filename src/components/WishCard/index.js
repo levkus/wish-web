@@ -46,6 +46,9 @@ const useStyles = makeStyles(theme => ({
   link: {
     maxWidth: '300px',
   },
+  marginBottom: {
+    marginBottom: theme.spacing(2),
+  },
 }))
 
 const getChiplabel = priority => {
@@ -201,21 +204,21 @@ const WishCard = ({ user, wish, showMenu, showActions }) => {
                 )}
               </Grid>
             </Grid>
-            <Grid item>
+            <Grid item className={classes.marginBottom}>
               <Grid container alignItems="center">
                 <Grid item className={classes.grow}>
-                  <Typography gutterBottom>{`~${wish.price} ₽`}</Typography>
+                  <Typography>{`~${wish.price} ₽`}</Typography>
                 </Grid>
                 <Grid item>
                   <Chip
                     label={getChiplabel(wish.priority)}
-                    color="secondary"
+                    color={wish.priority > 2 ? 'secondary' : 'primary'}
                     size="small"
                   />
                 </Grid>
               </Grid>
             </Grid>
-            <Grid item>
+            <Grid item className={classes.marginBottom}>
               {wish.description && (
                 <Typography
                   gutterBottom
@@ -228,8 +231,8 @@ const WishCard = ({ user, wish, showMenu, showActions }) => {
                 </Typography>
               )}
               {wish.link && (
-                <Typography gutterBottom noWrap className={classes.link}>
-                  <Link href={wish.link}>{wish.link}</Link>
+                <Typography variant="body2" noWrap className={classes.link}>
+                  Ссылка: <Link href={wish.link}>{wish.link}</Link>
                 </Typography>
               )}
             </Grid>
