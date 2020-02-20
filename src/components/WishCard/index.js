@@ -102,7 +102,17 @@ const WishCard = ({ user, wish, showMenu, showActions }) => {
                 <Grid item>
                   <Chip
                     label={getChiplabel(wish.priority)}
-                    color={wish.priority > 2 ? 'secondary' : 'primary'}
+                    color={(() => {
+                      if (wish.priority === 1) {
+                        return undefined
+                      }
+                      if (wish.priority === 2) {
+                        return 'primary'
+                      }
+                      if (wish.priority === 3) {
+                        return 'secondary'
+                      }
+                    })()}
                     size="small"
                   />
                 </Grid>
