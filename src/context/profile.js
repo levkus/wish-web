@@ -13,6 +13,7 @@ export const ProfileProvider = ({ children }) => {
         setTokenFailed(true)
       }
     },
+    pollInterval: 10000,
   })
 
   const token = window.localStorage.getItem('token')

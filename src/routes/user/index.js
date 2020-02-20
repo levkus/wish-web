@@ -26,6 +26,7 @@ const User = () => {
     variables: {
       username,
     },
+    pollInterval: 2000,
   })
   const [requestFriendship, { loading: requestLoading }] = useMutation(
     REQUEST_FRIENDSHIP,
