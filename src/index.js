@@ -41,13 +41,8 @@ const client = new ApolloClient({
 })
 
 const useStyles = makeStyles(theme => ({
-  container: {
-    minHeight: '100vh',
-  },
-  headerWrap: {},
   content: {
     marginTop: theme.spacing(12),
-    flexGrow: 1,
   },
 }))
 
@@ -59,8 +54,13 @@ const App = () => {
       <Router>
         <ThemeProvider theme={theme}>
           <ProfileProvider>
-            <Grid container className={classes.container}>
-              <Grid item className={classes.headerWrap}>
+            <Grid
+              container
+              direction="column"
+              aligntItems="center"
+              className={classes.container}
+            >
+              <Grid item>
                 <Header />
               </Grid>
               <Grid item className={classes.content}>

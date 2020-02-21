@@ -33,6 +33,9 @@ const useStyles = makeStyles(theme => ({
     marginBottom: theme.spacing(2),
     fontSize: '4rem',
   },
+  pageContainer: {
+    overflow: 'hidden',
+  },
 }))
 
 const User = () => {
@@ -177,7 +180,7 @@ const User = () => {
 
   return (
     <Loader isLoading={loading}>
-      <Container maxWidth="md">
+      <Container maxWidth="md" className={classes.pageContainer}>
         <Grid container direction="column" spacing={8}>
           <Grid item xs={12}>
             <Paper className={classes.userContainer}>
